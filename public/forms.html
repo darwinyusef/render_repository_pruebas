@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de Usuarios y Productos</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container mt-5">
+    <!-- Formulario de Registro de Usuario -->
+    <div class="card">
+      <div class="card-header">
+        Registro de Usuario
+      </div>
+      <div class="card-body">
+        <form id="usuarioForm">
+          <div class="form-group">
+            <label for="nombreUsuario">Nombre</label>
+            <input type="text" class="form-control" id="nombreUsuario" required>
+          </div>
+          <div class="form-group">
+            <label for="emailUsuario">Email</label>
+            <input type="email" class="form-control" id="emailUsuario" required>
+          </div>
+          <div class="form-group">
+            <label for="passwordUsuario">Contraseña</label>
+            <input type="password" class="form-control" id="passwordUsuario" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Registrar Usuario</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Formulario de Registro de Producto -->
+    <div class="card mt-5">
+      <div class="card-header">
+        Registro de Producto
+      </div>
+      <div class="card-body">
+        <form id="productoForm">
+          <div class="form-group">
+            <label for="nombreProducto">Nombre</label>
+            <input type="text" class="form-control" id="nombreProducto" required>
+          </div>
+          <div class="form-group">
+            <label for="precioProducto">Precio</label>
+            <input type="number" step="0.01" class="form-control" id="precioProducto" required>
+          </div>
+          <div class="form-group">
+            <label for="descripcionProducto">Descripción</label>
+            <textarea class="form-control" id="descripcionProducto" rows="3" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Registrar Producto</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const baseUrl = 'https://render-repository-pruebas.onrender.com';
+
+    // Función para enviar una solicitud POST
+    async function postData(url = '', data = {}) {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+      return response.json();
+    }
+
+    // Evento de envío del formulario de registro de usuario
+    document.getElementById('usuarioForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const nombre = document.getElementById('nombreUsuario').value;
+      const email = document.getElementById('emailUsuario').value;
+      const password = document.getElementById('passwordUsuario').value;
+      postData(`${baseUrl}/usuarios`, { nombre, email, password })
+        .then(data => {
+          console.log(data);
+          // Aquí puedes manejar la respuesta, por ejemplo, mostrar un mensaje de éxito o redirigir a otra página
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    });
+
+    // Evento de envío del formulario de registro de producto
+    document.getElementById('productoForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const nombre = document.getElementById('nombreProducto').value;
+      const precio = parseFloat(document.getElementById('precioProducto').value);
+      const descripcion = document.getElementById('descripcionProducto').value;
+      const usuarioId = 1; // Aquí debes establecer el ID del usuario actual
+      postData(`${baseUrl}/productos`, { nombre, precio, descripcion, usuarioId })
+        .then(data => {
+          console.log(data);
+          // Aquí puedes manejar la respuesta, por ejemplo, mostrar un mensaje de éxito o actualizar la lista de productos
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    });
+  </script>
+</body>
+</html>

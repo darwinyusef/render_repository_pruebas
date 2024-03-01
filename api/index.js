@@ -10,11 +10,20 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(morgan('dev'));
+app.use(express.static('public'));
 
-
-app.get('', (req, res) => {
-    res.send('iniciación');
+app.get('/', (req, res) => {
+    res.sendFile('./index.html', { root: 'public' });
 });
+
+app.get('/forms', (req, res) => {
+    res.sendFile('./forms.html', { root: 'public' });
+});
+
+app.get('/gets', (req, res) => {
+    res.sendFile('./gets.html', { root: 'public' });
+});
+
 app.get('/usuarios', async (req, res) => {
     const usuarios = await prisma.usuario.findMany();
     res.json(usuarios);

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tablas de Usuarios y Productos</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <!-- Tabla de Usuarios -->
+      <div class="card">
+        <div class="card-header">Lista de Usuarios</div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+            <tbody id="usuariosBody">
+              <!-- Aquí se poblarán los usuarios -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tabla de Productos -->
+      <div class="card mt-5">
+        <div class="card-header">Lista de Productos</div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Descripción</th>
+                <th>ID de Usuario</th>
+              </tr>
+            </thead>
+            <tbody id="productosBody">
+              <!-- Aquí se poblarán los productos -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const baseUrl = "https://render-repository-pruebas.onrender.com";
+
+      // Función para obtener los datos y poblar la tabla de usuarios
+      async function fetchUsuarios() {
+        const response = await fetch(`${baseUrl}/usuarios`);
+        const usuarios = await response.json();
+
+        const usuariosBody = document.getElementById("usuariosBody");
+        usuarios.forEach((usuario) => {
+          const row = `<tr>
+                      <td>${usuario.id}</td>
+                      <td>${usuario.nombre}</td>
+                      <td>${usuario.email}</td>
+                    </tr>`;
+          usuariosBody.innerHTML += row;
+        });
+      }
+
+      // Función para obtener los datos y poblar la tabla de productos
+      async function fetchProductos() {
+        const response = await fetch(`${baseUrl}/productos`);
+        const productos = await response.json();
+
+        const productosBody = document.getElementById("productosBody");
+        productos.forEach((producto) => {
+          const row = `<tr>
+                      <td>${producto.id}</td>
+                      <td>${producto.nombre}</td>
+                      <td>${producto.precio}</td>
+                      <td>${producto.descripcion}</td>
+                      <td>${producto.usuarioId}</td>
+                    </tr>`;
+          productosBody.innerHTML += row;
+        });
+      }
+
+      // Llamar a las funciones para poblar las tablas cuando se cargue la página
+      document.addEventListener("DOMContentLoaded", function () {
+        fetchUsuarios();
+        fetchProductos();
+      });
+    </script>
+  </body>
+</html>
