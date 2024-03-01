@@ -1,0 +1,29 @@
+// Crear un usuario
+curl -X POST -H "Content-Type: application/json" -d '{
+  "nombre": "Juan",
+  "email": "juan@example.com",
+  "password": "123456"
+}' http://localhost:3000/usuarios
+
+// Crear un producto para el usuario
+curl -X POST -H "Content-Type: application/json" -d '{
+  "nombre": "Producto 1",
+  "precio": 100.0,
+  "descripcion": "Este es un producto",
+  "usuarioId": 1
+}' http://localhost:3000/productos
+
+// Obtener todos los productos
+curl http://localhost:3000/productos
+
+// Obtener los productos de un usuario específico
+curl http://localhost:3000/productos/usuario/1
+
+// Actualizar un producto
+curl -X PUT -H "Content-Type: application/json" -d '{
+  "nombre": "Producto 1 actualizado",
+  "precio": 120.0
+}' http://localhost:3000/productos/1
+
+// Eliminar un producto
+curl -X DELETE http://localhost:3000/productos/1

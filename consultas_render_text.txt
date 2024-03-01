@@ -1,0 +1,32 @@
+// Crear un usuario
+curl -X POST -H "Content-Type: application/json" -d '{
+  "nombre": "Juan",
+  "email": "juan@example.com",
+  "password": "123456"
+}' https://render-repository-pruebas.onrender.com/usuarios
+
+// Crear un producto para el usuario
+curl -X POST -H "Content-Type: application/json" -d '{
+  "nombre": "Producto 1",
+  "precio": 100.0,
+  "descripcion": "Este es un producto",
+  "usuarioId": 1
+}' https://render-repository-pruebas.onrender.com/productos
+
+// Obtener todos los productos
+curl https://render-repository-pruebas.onrender.com/productos
+
+// Obtener todos los usuarios
+curl https://render-repository-pruebas.onrender.com/usuarios
+
+// Obtener los productos de un usuario específico
+curl https://render-repository-pruebas.onrender.com/productos/usuario/1
+
+// Actualizar un producto
+curl -X PUT -H "Content-Type: application/json" -d '{
+  "nombre": "Producto 1 actualizado",
+  "precio": 120.0
+}' https://render-repository-pruebas.onrender.com/productos/1
+
+// Eliminar un producto
+curl -X DELETE https://render-repository-pruebas.onrender.com/productos/1
